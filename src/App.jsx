@@ -119,7 +119,7 @@ const STEPS = [
     group: 'Hotovo',
     title: 'Použij obrázky kam potřebuješ',
     body: 'PNG obrázky jsou připravené pro Instagram, LinkedIn, Facebook. Nahraj je rovnou tam, kam chceš — nebo si je zkopíruj do Dropboxu, Google Drive, či pošli e-mailem.',
-    tip: 'Velikost obrázků je 1620 × 2025 bodů — vejdou se na všechny sociální sítě bez ztráty kvality.',
+    tip: 'Workflow automaticky generuje obrázky v poměru 5:4 (1620 × 2025 px) — vejdou se na všechny sociální sítě bez ztráty kvality.',
   },
   {
     n: '18',
@@ -142,7 +142,7 @@ function buildPrompt(styleId, text, wishes) {
 Text:
 ${text}
 
-Specifikace a přání:
+Specifikace / přání / formát:
 ${wishes}`;
 }
 
@@ -324,7 +324,7 @@ export default function App() {
                   <div className="c">{TEMPLATE_PLACEHOLDER_TEXT}</div>
                 </div>
                 <div className="prompt-field-block">
-                  <span className="k">Specifikace a přání:</span>
+                  <span className="k">Specifikace / přání / formát:</span>
                   <div className="v">{TEMPLATE_PLACEHOLDER_WISHES}</div>
                 </div>
               </div>
@@ -368,7 +368,7 @@ export default function App() {
                   />
                 </div>
                 <div className="form-field">
-                  <label htmlFor="form-wishes">Specifikace a přání</label>
+                  <label htmlFor="form-wishes">Specifikace / přání / formát</label>
                   <textarea
                     id="form-wishes"
                     className="form-textarea"
@@ -395,7 +395,7 @@ export default function App() {
             <details className="faq-item">
               <summary>Kde přesně najdu svoje hotové obrázky?</summary>
               <div className="answer">
-                Všechny obrázky se automaticky ukládají k tobě do počítače. Najdeš je ve složce projektu v pod-složce <code>vytvoreno/</code>. Každý nový karusel (post) bude mít vlastní složku pojmenovanou podle data, názvu karuselu a zvoleného stylu (např. <code>2026-05-25_predstaveni_firmy_bronze/</code>), takže v tom budeš mít vždy pořádek a příspěvky se navzájem nepřepíšou.
+                Všechny obrázky se automaticky ukládají k tobě do počítače. Najdeš je ve složce projektu v pod-složce <code>vytvoreno/</code>. Každý nový karusel bude mít vlastní složku pojmenovanou podle data, názvu karuselu a zvoleného stylu (např. <code>2026-05-25_predstaveni_firmy_bronze/</code>). Obrázky jsou vždy v poměru <b>5:4</b> (1620 × 2025 px) — připravené rovnou pro Instagram, LinkedIn i Facebook.
               </div>
             </details>
             <details className="faq-item">
