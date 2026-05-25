@@ -21,7 +21,7 @@ const STEPS = [
     group: 'Otevření Agent Manageru',
     title: 'Najdi v počítači složku „valor-group“',
     body: 'Tu složku jsme ti připravili a poslali. Najdi ji ve svém počítači (bývá v Dokumentech, na ploše, nebo ve Stahování). Zapamatuj si, kde leží — za chvilku ji budeš vybírat.',
-    tip: 'Když si nemůžeš vzpomenout, kam jsi ji uložil, hledej slovo „valor-group“ v počítači.',
+    tip: 'Složku dostaneš od nás přes odkaz na Google Drive — stačí kliknout na odkaz, pak vpravo nahoře „Stáhnout” a rozbalit ZIP soubor. Když si pak nemůžeš vzpomenout, kam jsi ji uložil, hledej slovo „valor-group” v počítači.',
   },
   {
     n: '4',
