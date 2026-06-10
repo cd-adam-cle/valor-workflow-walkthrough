@@ -55,14 +55,15 @@ const LAYOUT_NAMES = {
 
 export function getTiles(styleId) {
   const files = FILES[styleId] || [];
-  return files.map((file) => {
+  return files.map((file, i) => {
     const numStr = file.match(/_(\d{2})\.png$/)?.[1] || '';
     return {
       id: `${styleId}-${file}`,
       src: `./templates/${styleId}/${file}`,
       label: `${styleId}_basic_${numStr}`,
       layoutName: LAYOUT_NAMES[numStr] || '',
-      index: parseInt(numStr, 10),
+      index: parseInt(numStr, 10), // engine index = část názvu šablony (bronze_basic_07)
+      displayNum: i + 1,           // pořadové číslo v galerii (1–12, souvislé)
     };
   });
 }

@@ -317,7 +317,7 @@ export default function App() {
                     <span className="tile-placeholder" aria-hidden="true">
                       <span>Brzy</span>
                     </span>
-                    <span className="tile-num">#{String(tile.index).padStart(2, '0')}</span>
+                    <span className="tile-num">#{String(tile.displayNum).padStart(2, '0')}</span>
                   </div>
                   <div className="tile-card-info">
                     <div className="tile-card-code">{layoutCode}</div>
