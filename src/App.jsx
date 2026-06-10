@@ -187,7 +187,7 @@ function Lightbox({ tile, styleName, onClose }) {
     };
   }, [tile, onClose]);
   if (!tile) return null;
-  const layoutCode = `${styleName.split(' ')[0].toLowerCase()}_basic_${String(tile.index).padStart(2, '0')}`;
+  const layoutCode = tile.label; // už je ve tvaru bronze_basic_01b (podporuje suffix)
   return (
     <div className="lightbox" onClick={onClose}>
       <button className="lightbox-close" aria-label="Zavřít" onClick={onClose}>×</button>
@@ -295,7 +295,7 @@ export default function App() {
 
           <div className="gallery">
             {tiles.map((tile) => {
-              const layoutCode = `${activeStyle}_basic_${String(tile.index).padStart(2, '0')}`;
+              const layoutCode = tile.label; // bronze_basic_01b (podporuje suffix)
               return (
                 <button
                   key={tile.id}

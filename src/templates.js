@@ -26,11 +26,14 @@ export const STYLES = [
 ];
 
 // Reálně existující šablony (zdroj pravdy = workflow/content-rules.js).
-// Typy 04/09/11/12 byly z enginu odstraněny — nemají náhled ani je nelze vygenerovat.
-const TEMPLATE_INDICES = [1, 2, 3, 5, 6, 7, 8, 10, 13, 14, 15, 16];
+// Pořadí = pořadí v galerii. Suffix "01b" = obsahový slide s kickerem (za Hookem).
+// Typy 04/09/11/12 byly z enginu odstraněny. Při přidání šablony stačí doplnit sem.
+const TEMPLATE_KEYS = [
+  '01', '01b', '02', '03', '05', '06', '07', '08', '10',
+  '13', '14', '15', '16', '17', '18', '19', '20', '21',
+];
 
-const buildFiles = (style) =>
-  TEMPLATE_INDICES.map((i) => `${style}_basic_${String(i).padStart(2, '0')}.png`);
+const buildFiles = (style) => TEMPLATE_KEYS.map((k) => `${style}_basic_${k}.png`);
 
 const FILES = {
   bronze: buildFiles('bronze'),
@@ -40,6 +43,7 @@ const FILES = {
 
 const LAYOUT_NAMES = {
   '01': 'Hook · úvod',
+  '01b': 'Historie · obsah',
   '02': 'Fact-check',
   '03': 'Glass card',
   '05': 'Timeline',
@@ -51,19 +55,25 @@ const LAYOUT_NAMES = {
   '14': 'Krok 2 · Strategie',
   '15': 'Krok 3 · Řízení',
   '16': 'Final · CTA',
+  '17': 'Editorial',
+  '18': 'Glass stack',
+  '19': 'Spotlight · citát',
+  '20': 'Finance HUD · graf',
+  '21': 'Strand wave',
 };
 
 export function getTiles(styleId) {
   const files = FILES[styleId] || [];
   return files.map((file, i) => {
-    const numStr = file.match(/_(\d{2})\.png$/)?.[1] || '';
+    // suffix podporuje i písmeno (01b) i čísla (07, 17…)
+    const key = file.match(/_(\d{2}[a-z]?)\.png$/)?.[1] || '';
     return {
       id: `${styleId}-${file}`,
       src: `./templates/${styleId}/${file}`,
-      label: `${styleId}_basic_${numStr}`,
-      layoutName: LAYOUT_NAMES[numStr] || '',
-      index: parseInt(numStr, 10), // engine index = část názvu šablony (bronze_basic_07)
-      displayNum: i + 1,           // pořadové číslo v galerii (1–12, souvislé)
+      label: `${styleId}_basic_${key}`,   // klient používá v zadání (bronze_basic_01b)
+      layoutName: LAYOUT_NAMES[key] || '',
+      index: key,                          // klíč šablony (string, podporuje 01b)
+      displayNum: i + 1,                   // pořadové číslo v galerii (souvislé)
     };
   });
 }
