@@ -25,25 +25,28 @@ export const STYLES = [
   },
 ];
 
+// Reálně existující šablony (zdroj pravdy = workflow/content-rules.js).
+// Typy 04/09/11/12 byly z enginu odstraněny — nemají náhled ani je nelze vygenerovat.
+const TEMPLATE_INDICES = [1, 2, 3, 5, 6, 7, 8, 10, 13, 14, 15, 16];
+
+const buildFiles = (style) =>
+  TEMPLATE_INDICES.map((i) => `${style}_basic_${String(i).padStart(2, '0')}.png`);
+
 const FILES = {
-  bronze: Array.from({ length: 16 }, (_, i) => `bronze_basic_${String(i + 1).padStart(2, '0')}.png`),
-  dark: Array.from({ length: 16 }, (_, i) => `dark_basic_${String(i + 1).padStart(2, '0')}.png`),
-  light: Array.from({ length: 16 }, (_, i) => `light_basic_${String(i + 1).padStart(2, '0')}.png`),
+  bronze: buildFiles('bronze'),
+  dark: buildFiles('dark'),
+  light: buildFiles('light'),
 };
 
 const LAYOUT_NAMES = {
   '01': 'Hook · úvod',
   '02': 'Fact-check',
   '03': 'Glass card',
-  '04': 'Citace (06)',
   '05': 'Timeline',
   '06': 'Content base',
   '07': 'Content base · alt',
   '08': 'Content base · alt 2',
-  '09': 'Content base · D5',
   '10': 'Content base · D10',
-  '11': 'Citace (09)',
-  '12': 'Citace · alt (09)',
   '13': 'Krok 1 · Analýza',
   '14': 'Krok 2 · Strategie',
   '15': 'Krok 3 · Řízení',
@@ -52,14 +55,14 @@ const LAYOUT_NAMES = {
 
 export function getTiles(styleId) {
   const files = FILES[styleId] || [];
-  return files.map((file, idx) => {
-    const numStr = String(idx + 1).padStart(2, '0');
+  return files.map((file) => {
+    const numStr = file.match(/_(\d{2})\.png$/)?.[1] || '';
     return {
       id: `${styleId}-${file}`,
       src: `./templates/${styleId}/${file}`,
       label: `${styleId}_basic_${numStr}`,
       layoutName: LAYOUT_NAMES[numStr] || '',
-      index: idx + 1,
+      index: parseInt(numStr, 10),
     };
   });
 }

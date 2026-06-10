@@ -88,55 +88,69 @@ const STEPS = [
   },
   {
     n: '13',
+    group: 'První spuštění',
+    title: 'Poprvé: nech pomocníka připravit projekt (proběhne samo)',
+    body: 'Když pomocníka spustíš úplně poprvé, sám si nejdřív nainstaluje, co potřebuje k tvorbě obrázků (proběhne to automaticky po tvé první zprávě). Tahle první příprava trvá pár minut a stáhne se při ní pár věcí z internetu — je to jen jednou. Příště už pomocník naskočí během vteřin.',
+    tip: 'Nemusíš dělat nic zvláštního — jen napiš první zadání (krok 15) a nech pomocníka pracovat. Při přípravě uvidíš v chatu, jak se „instalují závislosti” — to je v pořádku.',
+  },
+  {
+    n: '14',
+    group: 'První spuštění',
+    title: 'Kdyby tě pomocník o něco požádal — klidně povol (Allow / Run)',
+    body: 'Většina povolení je už přednastavená, takže se nejspíš nic ptát nebude. Kdyby se ale objevilo okénko nebo tlačítko jako „Allow”, „Run”, „Proceed” nebo „Always allow”, klidně ho potvrď — pomocník tím jen dělá svou práci (instaluje, renderuje obrázky, stahuje novou verzi). Nic to nerozbije.',
+    tip: 'Když dáš „Always allow” (Vždy povolit), pomocník už se příště ptát nebude a poběží plynule. Je to bezpečné — pracuje jen uvnitř složky valor-group.',
+  },
+  {
+    n: '15',
     group: 'Tvorba obrázků',
     title: 'Připrav si text, ze kterého chceš obrázky',
     body: 'Nachystej si text k proměně v obrázky — příspěvek na LinkedIn, nabídka služby, výtah z porady, článek. Měj ho v dosahu (ve Wordu, v e-mailu, kdekoliv).',
     tip: 'Funguje to nejlépe na 200 až 800 slov. Z krátkého textu vznikne 3–4 obrázky, z dlouhého klidně 8–10.',
   },
   {
-    n: '14',
+    n: '16',
     group: 'Tvorba obrázků',
     title: 'Vyber si styl: Bronze, Dark, nebo Light',
     body: 'Podívej se v galerii na této stránce na tři styly. Bronze je teplý a výrazný. Dark je elegantní a tmavý. Light je čistý a světlý. Vyber, který sedí k tématu.',
     tip: 'Nejsi si jistý? Pošli pomocníkovi svůj text a napiš: „Doporuč mi styl, který se k tomu hodí.”',
   },
   {
-    n: '15',
+    n: '17',
     group: 'Tvorba obrázků',
     title: 'Napiš zadání pomocníkovi (dvě možnosti)',
     body: 'Teď pomocníkovi řekneš, co má udělat. Jdou dvě cesty: 1) Napiš mu rovnou do pole „Ask anything…” v Agent Manageru — klidně vlastními slovy. 2) Nebo si dole na této stránce vyplň „Vzorové zadání”, klikni na „Kopírovat zadání” a vlož ho do Antigravity (Ctrl + V). Předloha je jen pomůcka — není povinná.',
     tip: 'Pokud teprve začínáš, vyplň si vzorové zadání dole — pomůže ti to nezapomenout na nic důležitého. Pak už klidně piš jen vlastními slovy.',
   },
   {
-    n: '16',
+    n: '18',
     group: 'Tvorba obrázků',
     title: 'Odešli zprávu pomocníkovi',
     body: 'V poli „Ask anything…” máš svůj text. Stiskni Enter (nebo klikni na šipku odeslání vpravo). Pomocník se rozjede.',
     tip: 'Pokud se ti zpráva neodeslala, zkontroluj, že máš v levém panelu vybranou složku valor-group.',
   },
   {
-    n: '17',
+    n: '19',
     group: 'Tvorba obrázků',
     title: 'Počkej, až pomocník dokončí práci',
     body: 'Pomocník začne tvořit. V chatu uvidíš v reálném čase, co dělá — vybírá šablony, renderuje obrázky. Trvá to zhruba minutu, někdy o pár vteřin déle.',
     tip: 'Během čekání nemusíš nic dělat. Jen nezavírej Antigravity a neměň složku.',
   },
   {
-    n: '18',
+    n: '20',
     group: 'Hotovo',
     title: 'Najdi hotové obrázky ve složce „vytvoreno”',
     body: 'Až pomocník skončí, řekne ti přesnou cestu, kam obrázky uložil. Otevři si na počítači složku valor-group → vytvoreno → najdeš tam novou podsložku s dnešním datem, názvem tvého karuselu a vybraným stylem.',
     tip: 'Příklad názvu: „2026-05-25_predstaveni_firmy_bronze”. Uvnitř jsou PNG obrázky slide_01.png, slide_02.png atd.',
   },
   {
-    n: '19',
+    n: '21',
     group: 'Hotovo',
     title: 'Použij obrázky kam potřebuješ',
     body: 'PNG obrázky jsou připravené pro Instagram, LinkedIn, Facebook. Nahraj je rovnou tam, kam chceš — nebo si je zkopíruj do Dropboxu, Google Drive, či pošli e-mailem.',
     tip: 'Workflow automaticky generuje obrázky v poměru 5:4 (1620 × 2025 px) — vejdou se na všechny sociální sítě bez ztráty kvality.',
   },
   {
-    n: '20',
+    n: '22',
     group: 'Úpravy',
     title: 'Chceš něco změnit? Stačí napsat',
     body: 'Pokud se ti něco nelíbí, pokračuj ve stejné konverzaci a napiš třeba: „Předělej 3. obrázek tak, aby vypadal jako bronze_basic_06.” Nebo: „Zkrať text na druhém obrázku.” Pomocník upraví, co řekneš.',
@@ -147,7 +161,7 @@ const STEPS = [
 const TEMPLATE_PLACEHOLDER_TEXT = `(Sem vlož celý svůj text — třeba příspěvek na LinkedIn, článek, nebo nabídku služby. Asistent si z něj sám vybere, co je důležité pro jednotlivé obrázky.)`;
 const TEMPLATE_PLACEHOLDER_WISHES = `- Vytvoř z mého textu sérii 5 obrázků.
 - Pro první úvodní obrázek použij šablonu bronze_basic_01.
-- Pro třetí obrázek, kde se mluví o rizicích, použij přesně šablonu bronze_basic_04.
+- Pro třetí obrázek, kde se mluví o rizicích, použij přesně šablonu bronze_basic_06.
 - Pokud bude nějaký text moc dlouhý, sám ho zkrať, ať je hezky čitelný.`;
 
 function buildPrompt(styleId, text, wishes) {
