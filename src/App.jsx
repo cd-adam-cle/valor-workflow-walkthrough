@@ -235,6 +235,7 @@ export default function App() {
           <nav className="nav-links">
             <a href="#workflow">Jak to funguje</a>
             <a href="#templates">Galerie šablon</a>
+            <a href="#ai">Jakou AI</a>
             <a href="#prompt">Vzorové zadání</a>
             <a href="#faq">Časté dotazy</a>
             <a href="#prompt" className="nav-cta">Vytvořit karusel</a>
@@ -326,6 +327,58 @@ export default function App() {
               );
             })}
           </div>
+        </div>
+      </section>
+
+      {/* JAKOU AI POUŽÍT */}
+      <section className="ai-options" id="ai">
+        <div className="container">
+          <div className="section-head">
+            <span className="eyebrow eyebrow-xl">Jakou AI použít</span>
+            <p style={{ marginTop: 16 }}>
+              Pomocník, který ti obrázky tvoří, potřebuje „mozek“ — model umělé inteligence.
+              Doporučujeme <strong>Antigravity od Googlu</strong> (celý návod výše je na něj). Jako
+              náhradu můžeš použít i <strong>Claude Code</strong>. Stačí jedna z možností.
+            </p>
+          </div>
+
+          <div className="ai-cards" style={{ display: 'grid', gap: 24, gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', marginTop: 32 }}>
+            {/* Antigravity — doporučeno */}
+            <div className="ai-card" style={{ border: '1px solid rgba(216,138,101,0.4)', borderRadius: 16, padding: 28 }}>
+              <span className="eyebrow" style={{ color: '#D88A65' }}>Doporučeno</span>
+              <h3 style={{ margin: '8px 0 12px', fontSize: 24 }}>Antigravity (Google)</h3>
+              <p style={{ opacity: 0.85, lineHeight: 1.6 }}>
+                Program zdarma ke stažení (antigravity.google). Přihlásíš se Google účtem. Uvnitř
+                vybereš model <strong>Gemini</strong> — ten tvoří obrázky.
+              </p>
+              <ul style={{ lineHeight: 1.9, marginTop: 12, paddingLeft: 20 }}>
+                <li><strong>Zdarma:</strong> funguje, ale s denním limitem (pár generování denně). Na vyzkoušení ideální.</li>
+                <li><strong>Google AI Pro — ~$20/měsíc (cca 480 Kč):</strong> výrazně víc generování, plynulý provoz. <strong>Doporučená volba</strong>, pokud tvoříš pravidelně.</li>
+                <li><strong>Google AI Ultra:</strong> dražší plán pro velmi intenzivní používání — pro běžnou tvorbu netřeba.</li>
+              </ul>
+              <p style={{ marginTop: 12, fontSize: 14, opacity: 0.7 }}>V návodu výše doporučujeme model „Gemini 3.1 (High)“, jako záskok „Gemini 3.5 Flash (High)“.</p>
+            </div>
+
+            {/* Claude Code — alternativa */}
+            <div className="ai-card" style={{ border: '1px solid rgba(255,255,255,0.15)', borderRadius: 16, padding: 28 }}>
+              <span className="eyebrow" style={{ opacity: 0.6 }}>Alternativa</span>
+              <h3 style={{ margin: '8px 0 12px', fontSize: 24 }}>Claude Code (Anthropic)</h3>
+              <p style={{ opacity: 0.85, lineHeight: 1.6 }}>
+                Druhá možnost, pokud preferuješ AI od Anthropicu. Funguje stejně — řekneš mu, co chceš,
+                a vygeneruje obrázky. Workflow má povolení přednastavená i pro něj.
+              </p>
+              <ul style={{ lineHeight: 1.9, marginTop: 12, paddingLeft: 20 }}>
+                <li><strong>Claude Pro — ~$20/měsíc (cca 480 Kč):</strong> pokrývá běžnou tvorbu obrázků. Doporučená vstupní volba.</li>
+                <li><strong>Claude Max — od ~$100/měsíc:</strong> pro intenzivní každodenní používání. Pro běžnou tvorbu netřeba.</li>
+              </ul>
+              <p style={{ marginTop: 12, fontSize: 14, opacity: 0.7 }}>Funguje na Windows i Mac (v terminálu, v editoru nebo přes claude.ai/code).</p>
+            </div>
+          </div>
+
+          <p style={{ marginTop: 28, fontSize: 15, opacity: 0.75 }}>
+            💡 <strong>Stačí jedna z nich.</strong> Ceny jsou orientační (přepočet ze $ k červnu 2026) a u poskytovatele se mohou měnit.
+            Pro start klidně začni se zdarma variantou Antigravity a placené si pořiď, až budeš tvořit pravidelně.
+          </p>
         </div>
       </section>
 
