@@ -158,6 +158,39 @@ const STEPS = [
   },
 ];
 
+// Groupy z návodu, které jsou specifické pro Antigravity. Při volbě „Claude Code"
+// se nahradí kroky z CLAUDE_STEPS (níže). Zbytek (stažení, tvorba, hotovo) je společný.
+const ANTIGRAVITY_GROUPS = ['Příprava', 'Otevření Agent Manageru', 'Spuštění pomocníka'];
+
+// Kroky pro Claude Code (ve VS Code) — nahrazují Antigravity část (kroky 4–12).
+// Společné okolí (stažení 1–3, tvorba 13+) zůstává stejné.
+const CLAUDE_STEPS = [
+  {
+    n: '4', group: 'Příprava (Claude Code)',
+    title: 'Nainstaluj si editor VS Code',
+    body: 'VS Code je bezplatný editor od Microsoftu, ve kterém poběží Claude Code. Otevři v prohlížeči code.visualstudio.com, klikni na „Download“ a vyber verzi pro svůj počítač (Windows / Mac). Pak ho dvojklikem nainstaluj.',
+    tip: 'Pokud už VS Code máš, tento krok přeskoč.',
+  },
+  {
+    n: '5', group: 'Příprava (Claude Code)',
+    title: 'Přidej rozšíření „Claude Code“',
+    body: 'Spusť VS Code. Vlevo klikni na ikonu kostiček (Extensions / Rozšíření), do vyhledávání napiš „Claude Code“ a u oficiálního rozšíření od Anthropic klikni na „Install“. Po instalaci se přihlas svým Claude účtem (tlačítkem „Sign in“).',
+    tip: 'Potřebuješ účet Claude (claude.ai). Předplatné a ceny viz sekce „Jakou AI“ níže.',
+  },
+  {
+    n: '6', group: 'Otevření složky',
+    title: 'Otevři ve VS Code složku valor-group',
+    body: 'Nahoře v menu klikni na „File → Open Folder…“ (Soubor → Otevřít složku) a vyber rozbalenou složku valor-group (tu z kroku 2). VS Code ji načte a vlevo uvidíš její obsah.',
+    tip: 'Je důležité otevřít přímo složku valor-group, ne složku nad ní — Claude pak ví, kde pracovat.',
+  },
+  {
+    n: '7', group: 'Spuštění pomocníka (Claude Code)',
+    title: 'Otevři Claude Code a vyber model',
+    body: 'Klikni na ikonu Claude Code (v levém panelu nebo přes Cmd/Ctrl+Shift+P → „Claude Code: Open“). Otevře se chatovací panel. Příkazem /model si vyber model: „Opus“ dělá nejlepší výsledky, „Sonnet“ je rychlejší a šetří limit.',
+    tip: 'Doporučení: začni s Opus. Když ti dojde limit, přepni na Sonnet (/model sonnet). Workflow má povolení přednastavená — Claude se nebude muset moc ptát.',
+  },
+];
+
 const TEMPLATE_PLACEHOLDER_TEXT = `(Sem vlož celý svůj text — třeba příspěvek na LinkedIn, článek, nebo nabídku služby. Asistent si z něj sám vybere, co je důležité pro jednotlivé obrázky.)`;
 const TEMPLATE_PLACEHOLDER_WISHES = `- Vytvoř z mého textu sérii 5 obrázků.
 - Pro první úvodní obrázek použij šablonu bronze_basic_01.
@@ -203,6 +236,7 @@ export default function App() {
   const [activeStyle, setActiveStyle] = useState('bronze');
   const [lightboxTile, setLightboxTile] = useState(null);
   const [copied, setCopied] = useState(false);
+  const [toolMode, setToolMode] = useState('antigravity'); // 'antigravity' | 'claude'
 
   const [formStyle, setFormStyle] = useState('bronze');
   const [formText, setFormText] = useState('');
@@ -210,6 +244,16 @@ export default function App() {
 
   const currentStyle = STYLES.find((s) => s.id === activeStyle);
   const tiles = getTiles(activeStyle);
+
+  // Sestav kroky podle zvoleného nástroje: u Claude Code nahraď Antigravity část.
+  const activeSteps = (() => {
+    if (toolMode === 'antigravity') return STEPS;
+    const before = STEPS.filter((s) => !ANTIGRAVITY_GROUPS.includes(s.group) && Number(s.n) < 4);
+    const after = STEPS.filter((s) => !ANTIGRAVITY_GROUPS.includes(s.group) && Number(s.n) >= 4);
+    const merged = [...before, ...CLAUDE_STEPS, ...after];
+    // přečísluj n podle pořadí, ať jde 1,2,3,… bez ohledu na zdroj
+    return merged.map((s, i) => ({ ...s, n: String(i + 1) }));
+  })();
 
   const canCopy = formText.trim().length > 0 && formWishes.trim().length > 0;
 
@@ -250,9 +294,70 @@ export default function App() {
             <span className="eyebrow eyebrow-xl">Návod krok za krokem</span>
             <p style={{ marginTop: 16 }}>Projdi si tyhle kroky první den. Pak už si vždycky stačí jen vzpomenout, co a kam napsat — celé to děláš přes chat.</p>
           </div>
+
+          {/* ROZCESTNÍK — klikni a kroky se přizpůsobí zvolenému nástroji */}
+          <div className="tool-picker" style={{ margin: '0 0 48px' }}>
+            <p style={{ marginBottom: 20, fontWeight: 700, fontSize: 18 }}>
+              Nejdřív si klikni, přes co budeš tvořit — návod se ti podle toho přizpůsobí. Stačí jedna cesta:
+            </p>
+            <div style={{ display: 'grid', gap: 24, gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))' }}>
+              {/* Karta Antigravity — klikací */}
+              <button
+                type="button"
+                onClick={() => setToolMode('antigravity')}
+                style={{
+                  textAlign: 'left', cursor: 'pointer', borderRadius: 16, padding: 28,
+                  background: 'transparent', color: 'inherit', font: 'inherit',
+                  border: toolMode === 'antigravity' ? '2px solid #D88A65' : '1px solid rgba(255,255,255,0.15)',
+                  boxShadow: toolMode === 'antigravity' ? '0 0 0 3px rgba(216,138,101,0.15)' : 'none',
+                  transition: 'all .15s',
+                }}
+              >
+                <span className="eyebrow" style={{ color: '#D88A65' }}>
+                  {toolMode === 'antigravity' ? '✓ Vybráno · doporučeno' : 'Doporučeno'}
+                </span>
+                <h3 style={{ margin: '8px 0 12px', fontSize: 22 }}>Antigravity (Google)</h3>
+                <p style={{ opacity: 0.85, lineHeight: 1.6, marginBottom: 12 }}>
+                  Samostatný program zdarma ke stažení, přihlásíš se Google účtem. Nejjednodušší start.
+                </p>
+                <p style={{ fontSize: 15, lineHeight: 1.7 }}>
+                  <strong>Model:</strong> „Gemini 3.1 (High)“ (nejlepší obrázky), záskok „Gemini 3.5 Flash (High)“.
+                </p>
+              </button>
+
+              {/* Karta Claude Code — klikací */}
+              <button
+                type="button"
+                onClick={() => setToolMode('claude')}
+                style={{
+                  textAlign: 'left', cursor: 'pointer', borderRadius: 16, padding: 28,
+                  background: 'transparent', color: 'inherit', font: 'inherit',
+                  border: toolMode === 'claude' ? '2px solid #D88A65' : '1px solid rgba(255,255,255,0.15)',
+                  boxShadow: toolMode === 'claude' ? '0 0 0 3px rgba(216,138,101,0.15)' : 'none',
+                  transition: 'all .15s',
+                }}
+              >
+                <span className="eyebrow" style={{ color: toolMode === 'claude' ? '#D88A65' : undefined, opacity: toolMode === 'claude' ? 1 : 0.6 }}>
+                  {toolMode === 'claude' ? '✓ Vybráno · alternativa' : 'Alternativa'}
+                </span>
+                <h3 style={{ margin: '8px 0 12px', fontSize: 22 }}>Claude Code (ve VS Code)</h3>
+                <p style={{ opacity: 0.85, lineHeight: 1.6, marginBottom: 12 }}>
+                  AI od Anthropicu. Nainstaluješ editor VS Code (zdarma) + rozšíření Claude Code.
+                </p>
+                <p style={{ fontSize: 15, lineHeight: 1.7 }}>
+                  <strong>Model:</strong> „Opus“ (nejlepší kvalita), na běžnou tvorbu stačí „Sonnet“ (rychlejší). Přepínáš příkazem <code>/model</code>.
+                </p>
+              </button>
+            </div>
+            <p style={{ marginTop: 20, fontSize: 15, opacity: 0.75 }}>
+              💡 Nevíš, kterou zvolit? Nech <strong>Antigravity</strong> — má nejjednodušší start.
+              Kroky níže se mění podle tvé volby. Ceny obou viz sekce <a href="#ai">Jakou AI</a>.
+            </p>
+          </div>
+
           <div className="workflow-grid">
-            {STEPS.map((step, i) => {
-              const prevGroup = i > 0 ? STEPS[i - 1].group : null;
+            {activeSteps.map((step, i) => {
+              const prevGroup = i > 0 ? activeSteps[i - 1].group : null;
               const showGroup = step.group && step.group !== prevGroup;
               return (
                 <article className="step" key={step.n}>
